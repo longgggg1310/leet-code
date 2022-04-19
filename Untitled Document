@@ -1,0 +1,41 @@
+from geopy.geocoders import Nominatim
+
+geolocator = Nominatim(user_agent="AIzaSyBQyUFlDic6--DhmjcHs_67_FsgU1OhX3A")
+
+
+
+for i in df1.index:
+
+    try:
+
+        #tries fetch address from geopy
+
+        location = geolocator.geocode(df1['address'][i])
+
+        
+
+        #append lat/long to column using dataframe location
+
+        df1.loc[i,'location_lat'] = location.latitude
+
+        df1.loc[i,'location_long'] = location.longitude
+
+        df1.loc[i,'location_address'] = location.address
+
+    except:
+
+        #catches exception for the case where no value is returned
+
+        #appends null value to column
+
+        df1.loc[i,'location_lat'] = ""
+
+        df1.loc[i,'location_long'] = ""
+
+        df1.loc[i,'location_address'] = ""
+
+
+
+#print first rows as sample
+
+df1.head()
